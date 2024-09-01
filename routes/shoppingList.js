@@ -25,7 +25,18 @@ router.get("/:name", function(req, res, next) {
   try {
     const foundItem = items.find(item => item.name == req.params.name);
     if (foundItem == undefined) throw new ExpressError("Item not found", 404);
-    foundItem.name = req.body.name;
+    res.json({item: foundItem});
+  } catch(e) {
+    return next(e);
+  }
+});
+
+router.patch("/:name", function(req, res, next) {
+  try {
+    const foundItem = items.find(item => item.name == req.params.name);
+    if (foundItem == undefined) throw new ExpressError("Item not found", 404);
+    if (req.body.name) foundItem.name = req.body.name;
+    if (req.body.price) foundItem.price = req.body.price;
     res.json({updatedItem: foundItem});
   } catch(e) {
     return next(e);
