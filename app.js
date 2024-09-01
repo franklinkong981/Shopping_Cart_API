@@ -2,7 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 
 const ExpressError = require("./errors/expressError");
-const shoppingListRoutes = require("./routes/shoppingListRoutes");
+const shoppingListRoutes = require("./routes/shoppingList");
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(morgan('dev'));
 app.get('/favicon.ico', (req, res) => res.sendStatus(204));
 
 //Use Routes organized into other files using Express Router.
-app.use('/shoppingCart', shoppingListRoutes);
+app.use('/items', shoppingListRoutes);
 
 //404 handler
 app.use(function(req,res, next) {
