@@ -21,4 +21,15 @@ router.post("/", function(req, res, next) {
   }
 });
 
+router.get("/:name", function(req, res, next) {
+  try {
+    const foundItem = items.find(item => item.name == req.params.name);
+    if (foundItem == undefined) throw new ExpressError("Item not found", 404);
+    foundItem.name = req.body.name;
+    res.json({updatedItem: foundItem});
+  } catch(e) {
+    return next(e);
+  }
+});
+
 module.exports = router;
