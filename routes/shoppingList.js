@@ -3,6 +3,7 @@ const router = new express.Router();
 
 const ExpressError = require("../errors/expressError");
 const items = require("../database/fakeDb");
+const { route } = require("../app");
 
 //all shoppingList routes go here
 router.get("/", function(req, res) {
@@ -38,6 +39,17 @@ router.patch("/:name", function(req, res, next) {
     if (req.body.name) foundItem.name = req.body.name;
     if (req.body.price) foundItem.price = req.body.price;
     res.json({updatedItem: foundItem});
+  } catch(e) {
+    return next(e);
+  }
+});
+
+route.delete("/:name", function(req, res, next) {
+  try {
+    const foundItemIndex = items.findIndex(item => item.name == req.params.name);
+    if (foundItemIndex === -1) throw new ExpressError("Item not found", 404);
+    items.splice(foundItemIndex, 1);
+    res.json({message: "Deleted"});
   } catch(e) {
     return next(e);
   }
