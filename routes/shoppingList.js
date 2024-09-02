@@ -44,7 +44,7 @@ router.patch("/:name", function(req, res, next) {
   }
 });
 
-route.delete("/:name", function(req, res, next) {
+router.delete("/:name", function(req, res, next) {
   try {
     const foundItemIndex = items.findIndex(item => item.name == req.params.name);
     if (foundItemIndex === -1) throw new ExpressError("Item not found", 404);
